@@ -2,59 +2,13 @@
 
 Binary sentiment classification on the [Stanford IMDB dataset](https://huggingface.co/datasets/stanfordnlp/imdb) using LSTM-based models augmented with various attention mechanisms.
 
----
-
-## Table of Contents
-- [Overview](#overview)
-- [Project Structure](#project-structure)
-- [Dataset](#dataset)
-- [Models](#models)
-- [Attention Mechanisms](#attention-mechanisms)
-- [Training](#training)
-- [Results](#results)
-- [Streamlit Demo App](#streamlit-demo-app)
-- [Setup & Usage](#setup--usage)
+🌐 **Live Demo:** [sentiment-analysis-livid-eta.vercel.app](https://sentiment-analysis-livid-eta.vercel.app/)
 
 ---
 
 ## Overview
 
-This project explores how different **attention mechanisms** (Bahdanau, Luong Dot, Luong Concat, Luong General) interact with different **sequence models** (Vanilla RNN, Vanilla LSTM, Bidirectional RNN, Bidirectional LSTM) for sentiment classification. The best-performing model is then served via a **Streamlit web app** that visualises attention weights over input tokens.
-
----
-
-## Project Structure
-
-```
-Session_3_Task/
-├── codes/
-│   ├── main.ipynb            # Main training notebook
-│   ├── app.py                # Streamlit inference app
-│   ├── utils.py              # Helper utilities
-│   ├── embedding_matrix.pt   # Pre-built GloVe embedding matrix
-│   ├── word2idx.pt           # Word-to-index mapping
-│   ├── idx2word.pt           # Index-to-word mapping
-│   ├── glove.6B.*.txt        # GloVe pre-trained vectors (50/100/200/300d)
-│   └── attention/
-│       ├── bahdanau.py       # Bahdanau (additive) attention
-│       ├── luongdot.py       # Luong Dot-product attention
-│       ├── luongconcat.py    # Luong Concat attention
-│       └── luonggeneral.py   # Luong General attention
-├── models/
-│   ├── Vanilla LSTM with Bahdanau.pth
-│   ├── Vanilla LSTM with Luong General.pth
-│   ├── BiLSTM with Bahdanau.pth
-│   └── BiLSTM with LuongConcat.pth
-├── plots/
-│   ├── vanilla_models_accuracy_comparison.png
-│   ├── baseline_models_attention_comparison.png
-│   ├── model_attention_score_table.png
-│   ├── attention_weights.png
-│   └── finetuned_models/     # Per-model training curves
-├── logs/                     # Per-epoch training logs
-└── reports/
-    └── report.pdf
-```
+This project explores how different **attention mechanisms** (Bahdanau, Luong Dot, Luong Concat, Luong General) interact with different **sequence models** (Vanilla RNN, Vanilla LSTM, Bidirectional RNN, Bidirectional LSTM) for sentiment classification. The best-performing models are served via **SentiScope** — a React web app backed by a FastAPI + ONNX Runtime inference server — that visualises attention weights over input tokens in real time.
 
 ---
 
@@ -146,7 +100,7 @@ All four models trained **without** attention, random-weight initialisation only
 
 ![Vanilla Models Accuracy Comparison](plots/vanilla_models_accuracy_comparison.png)
 
-> All vanilla (no-attention, no-GloVe) models hover near **50 % accuracy**, confirming that the gains below come from the combination of pre-trained embeddings and attention.
+ All vanilla (no-attention, no-GloVe) models hover near **50 % accuracy**, confirming that the gains below come from the combination of pre-trained embeddings and attention.
 
 ---
 
@@ -206,52 +160,46 @@ The model correctly attends to semantically rich tokens (e.g. *screenplay*, *aff
 
 ---
 
-## Streamlit Demo App
+## Sentiment Analysis Web App
 
-`codes/app.py` provides an interactive UI where you can type any movie review and see:
-1. **Predicted sentiment** (Positive / Negative)
-2. **Attention bar chart** over the input tokens
+**SentiScope** is a React + Vite frontend backed by a FastAPI inference server. It lets you:
 
-**Run locally:**
+1. **Select** any of the 4 trained model + attention combinations
+2. **Type or paste** a movie review (or pick a sample)
+3. **See** the predicted sentiment, confidence score (animated ring), and an **attention heatmap** showing which tokens the model focused on
 
-```bash
-cd codes
-streamlit run app.py
-```
 
-The app loads the **Vanilla LSTM + Luong General** checkpoint by default.
+
+
+## Deployment
+
+The app is deployed using a two-service architecture:
+
+| Service | Platform | URL |
+|---|---|---|
+| **Backend** (FastAPI + ONNX Runtime) | [Render.com](https://render.com) | [sentiment-analysis-9rab.onrender.com](https://sentiment-analysis-9rab.onrender.com) |
+| **Frontend** (React + Vite) | [Vercel](https://vercel.com) | [sentiment-analysis-livid-eta.vercel.app](https://sentiment-analysis-livid-eta.vercel.app/) |
+
+
+
+The trained PyTorch checkpoints were exported to ONNX format using `codes/export_onnx.py`. At inference time the server uses **ONNX Runtime** instead of Pytorch.
+
 
 ---
 
 ## Setup & Usage
 
-### Requirements
 
-```
-torch
-transformers / datasets  (HuggingFace)
-pandas
-scikit-learn
-matplotlib
-streamlit
-```
 
-Install with:
+Install inference dependencies:
 
 ```bash
-pip install torch datasets pandas scikit-learn matplotlib streamlit
+pip install -r codes/requirements.txt
 ```
 
-### Running the Notebook
+### Running the Training Notebook
 
 Open `codes/main.ipynb` in Jupyter and run all cells sequentially. GloVe vectors (`glove.6B.100d.txt`) must be present in the `codes/` directory.
-
-### Running the Demo App
-
-```bash
-cd codes
-streamlit run app.py
-```
 
 ---
 
