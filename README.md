@@ -41,43 +41,42 @@ All models share the same embedding layer (GloVe 100-d, trainable) and a 0.3 dro
 
 ## Attention Mechanisms
 
-Four attention variants were implemented and compared:
+Four attention variants were implemented and compared.
 
 ### Bahdanau (Additive) Attention
-Projects encoder outputs \(W_{\text{enc}}\) and decoder hidden state \(W_{\text{dec}}\) into a shared attention space, then computes attention scores using a learned vector \(v\):
 
-\[
-e_i = v^\top \tanh\!\left(W_{\text{enc}} h_i + W_{\text{dec}} s_t\right)
-\]
+Projects encoder outputs $W_{\text{enc}}$ and decoder hidden state $W_{\text{dec}}$ into a shared attention space.
 
-\[
-\alpha_i = \frac{\exp(e_i)}{\sum_j \exp(e_j)}
-\]
+$$
+e_i = v^\top \tanh\left(W_{\text{enc}}h_i + W_{\text{dec}}s_t\right)
+$$
 
-\[
+$$
+\alpha_i = \operatorname{softmax}(e_i)
+$$
+
+$$
 c_t = \sum_i \alpha_i h_i
-\]
+$$
 
 ### Luong Dot Attention
-Computes attention scores using the dot product between the decoder hidden state and each encoder output (requires equal dimensionality):
 
-\[
+$$
 e_i = h_i^\top s_t
-\]
+$$
 
 ### Luong General Attention
-Introduces a learnable weight matrix \(W\) before computing the dot product:
 
-\[
+$$
 e_i = h_i^\top W s_t
-\]
+$$
 
 ### Luong Concat Attention
-Concatenates the encoder and decoder states, applies a non-linear transformation, and scores using a learned vector \(v\):
 
-\[
-e_i = v^\top \tanh\!\left(W [\, s_t ; h_i \,]\right)
-\]
+$$
+e_i = v^\top \tanh\left(W[s_t;h_i]\right)
+$$
+
 
 ## Training
 
