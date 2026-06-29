@@ -1,0 +1,9 @@
+codes/glove.6B.50d.txt
+codes/glove.6B.100d.txt
+codes/glove.6B.200d.txt
+codes/glove.6B.300d.txt
+models/
+codes/app.py
+codes/embedding_matrix.pt
+codes/idx2word.pt
+codes/word2idx.pt

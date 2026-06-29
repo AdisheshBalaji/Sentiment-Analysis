@@ -1,0 +1,38 @@
+Training started for model: BidirectionalLSTM(
+  (embedding): Embedding(83334, 100)
+  (bilstm): LSTM(100, 64, batch_first=True, dropout=0.3, bidirectional=True)
+  (dropout_layer): Dropout(p=0.3, inplace=False)
+  (attention): LuongConcatAttention(
+    (W): Linear(in_features=256, out_features=32, bias=False)
+    (v): Linear(in_features=32, out_features=1, bias=False)
+  )
+  (fc): Linear(in_features=256, out_features=2, bias=True)
+)
+Epoch [1/10] | Train Loss: 0.4381 | Train Accuracy: 77.90%
+
+Epoch [1/10] | Val Loss: 0.2664 | Val Accuracy: 89.58%
+Precision: 0.8960 | Recall: 0.8958 | F1 Score: 0.8958
+Epoch [2/10] | Train Loss: 0.2452 | Train Accuracy: 90.09%
+
+Epoch [2/10] | Val Loss: 0.2434 | Val Accuracy: 90.00%
+Precision: 0.9006 | Recall: 0.9000 | F1 Score: 0.9000
+Epoch [3/10] | Train Loss: 0.1847 | Train Accuracy: 92.97%
+
+Epoch [3/10] | Val Loss: 0.2414 | Val Accuracy: 90.48%
+Precision: 0.9071 | Recall: 0.9048 | F1 Score: 0.9047
+Epoch [4/10] | Train Loss: 0.1324 | Train Accuracy: 95.17%
+
+Epoch [4/10] | Val Loss: 0.2619 | Val Accuracy: 90.04%
+Precision: 0.9017 | Recall: 0.9004 | F1 Score: 0.9003
+Epoch [5/10] | Train Loss: 0.0903 | Train Accuracy: 96.83%
+
+Epoch [5/10] | Val Loss: 0.2647 | Val Accuracy: 90.62%
+Precision: 0.9065 | Recall: 0.9062 | F1 Score: 0.9062
+Epoch [6/10] | Train Loss: 0.0643 | Train Accuracy: 97.78%
+
+Epoch [6/10] | Val Loss: 0.3334 | Val Accuracy: 90.00%
+Precision: 0.9004 | Recall: 0.9000 | F1 Score: 0.9000
+Epoch [7/10] | Train Loss: 0.0504 | Train Accuracy: 98.31%
+
+Epoch [7/10] | Val Loss: 0.3508 | Val Accuracy: 90.02%
+Precision: 0.9004 | Recall: 0.9002 | F1 Score: 0.9002

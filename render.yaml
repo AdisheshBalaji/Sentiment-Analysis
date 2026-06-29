@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: sentiscope-api
+    runtime: python
+    rootDir: codes
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+    # Render free tier: 512 MB RAM
+    # onnxruntime (~15 MB) + 4 ONNX models (~134 MB) + word2idx (~1.7 MB) = ~151 MB ✓
