@@ -2,7 +2,7 @@
 
 Binary sentiment classification on the [Stanford IMDB dataset](https://huggingface.co/datasets/stanfordnlp/imdb) using LSTM-based models augmented with various attention mechanisms.
 
-
+Live demo : https://sentiment-analysis-livid-eta.vercel.app/
 
 ---
 
